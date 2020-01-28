@@ -30,17 +30,27 @@ public class TaskActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         //initializeDateBase();
         initializeDataChangeListner();
+
     }
 
     public void initializeDataChangeListner(){
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("tasksEvent",
-                        String.valueOf(dataSnapshot.child("tasks").getChildrenCount() ) );
+                int taskCount = 0;
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.child("tasks").getChildren()){
+
                     Task task = dataSnapshot1.getValue(Task.class);
-                    Log.d("tasksEvent", task.getTask() + ", "+ task.getDate());
+                    Log.d("tasksEvent", dataSnapshot1.getKey() + "/" +task.getTask() + ", "+ task.getDate());
+
+                    taskCount++;
+
+                    if (taskCount > 3) {
+                        Log.d("tasksEvent", "removing"+dataSnapshot1.getRef() + "/" +task.getTask());
+                        dataSnapshot1.getRef().removeValue();
+                        continue;
+                    }
+
                 }
             }
 
