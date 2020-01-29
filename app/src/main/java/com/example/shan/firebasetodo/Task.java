@@ -19,14 +19,13 @@ public class Task {
     }
 
 
-/*
     public void setTodoTask(String todoTask) {
         this.todoTask = todoTask;
     }
 
     public void setDueDate(String dueDate) {
         mDueDate = dueDate;
-    }*/
+    }
 
     //MUST DEFINE GETTER FUNCTIONS IN ORDER TO SERIALIZE OBJECT
 

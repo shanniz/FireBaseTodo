@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
                             Log.d("snapShot", snapshot.getValue().toString());
 
-                            if (task !=null)
-                                mTextView.setText(task.getTask());
+                            /*if (task !=null)
+                                mTextView.setText(task.getTask());*/
 
                         }
                     }

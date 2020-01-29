@@ -29,7 +29,36 @@ public class TaskActivity extends AppCompatActivity {
         mEditTextDueDate = (EditText) findViewById(R.id.editTextDate);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         //initializeDateBase();
-        initializeDataChangeListner();
+        //initializeDataChangeListner();
+
+        final TextView textView = (TextView) findViewById(R.id.textViewTasksList);
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+
+            String searchTask = "04/04/2020";
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String tasksList="";
+                for (DataSnapshot dataSnapshot1: dataSnapshot.child("tasks").getChildren()){
+                    Task task = dataSnapshot1.getValue(Task.class);
+                    tasksList += task.getTask() + ", ";
+                }
+                Toast.makeText(TaskActivity.this, tasksList, Toast.LENGTH_LONG).show();
+                textView.setText(tasksList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
 
     }
 
@@ -41,15 +70,16 @@ public class TaskActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.child("tasks").getChildren()){
 
                     Task task = dataSnapshot1.getValue(Task.class);
-                    Log.d("tasksEvent", dataSnapshot1.getKey() + "/" +task.getTask() + ", "+ task.getDate());
+                    //task.getTask()
+                    //Log.d("tasksEvent", dataSnapshot1.getKey() + "/" +task.getTask() + ", "+ task.getDate());
 
                     taskCount++;
-
+/*
                     if (taskCount > 3) {
                         Log.d("tasksEvent", "removing"+dataSnapshot1.getRef() + "/" +task.getTask());
                         dataSnapshot1.getRef().removeValue();
                         continue;
-                    }
+                    }*/
 
                 }
             }
